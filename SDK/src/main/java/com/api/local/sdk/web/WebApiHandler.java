@@ -50,7 +50,6 @@ public class WebApiHandler {
     }
 
     public void request(String url, IResponseListener listenr) {
-        Log.d("LsService", "==>request");
         Request request = new Request.Builder()
                 .url(url)
                 .build();

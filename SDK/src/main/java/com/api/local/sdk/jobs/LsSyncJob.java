@@ -26,7 +26,6 @@ public class LsSyncJob extends Job {
     }
 
     public static void scheduleJob() {
-
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(LsSyncJob.TAG);
         if (!jobRequests.isEmpty()) {
             Log.d(TAG, "Already scheduled a job in the list");

@@ -18,7 +18,7 @@ import com.api.local.sdk.web.WebApiHandler;
 
 public class LsServicePlus extends IntentService {
     private static final String TAG = LsServicePlus.class.getSimpleName();
-    public static final int NORMAL_INTERVAL = 10*1000;
+    public static final int NORMAL_INTERVAL = 60*1000;
     private final IBinder mBinder = new LocalBinder();
     private Handler mHandler = new Handler();
 

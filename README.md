@@ -13,6 +13,29 @@ aar file, and should be doze mode proof and resilient to device restarts.
 
 1. Link the library to your project
 
+Create ‘libs’ folder under src/main
+Copy SDK-debug.aar to src/main/libs
+
+update dependency of libraries and SDK
+~~~~
+    implementation 'com.evernote:android-job:1.3.0-alpha03'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation (name:'SDK-debug', ext:'aar')
+~~~~
+
+link aar file by editing statment in your application top-level build.gradle as below
+~~~~
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        flatDir {
+            dirs 'src/main/libs'
+        }
+    }
+}
+~~~~
 
 2. Extend BaseActivity provided by the library
 For Example, if MainActivity is the Activity that you would like to use the library.
@@ -36,6 +59,10 @@ LsJobService is a
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 ~~~~
 
+5. Check result
+Result of querying comments will be filter by TAG "LsServicePlus"
+adb logcat | grep LsServicePlus
+
 ##ToDo
 - Refine Doze mode job handling 
   1.Enqueue comment fetching jobs into Background job pipe when device is idle, 
@@ -46,11 +73,9 @@ LsJobService is a
   1. Extract query settings to a config file
   2. SDK will read setting from config file
 
-
 ##3rd party library dependency (besides Google)
 This library used external libraries:
- - Evernote Android-Job, handles jobs in the background
-    https://github.com/evernote/android-job
+ - Evernote Android-Job
  - Okhttp
  - Gson
 
