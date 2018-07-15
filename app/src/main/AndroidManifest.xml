@@ -3,8 +3,10 @@
     package="com.api.local.demo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
+        android:name="com.api.local.sdk.LsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,8 +22,19 @@
         </activity>
 
         <service
-            android:name="com.api.local.sdk.LsService"
+            android:name="com.api.local.sdk.LsServicePlus"
             android:enabled="true" />
+        <!--<service-->
+            <!--android:name="com.api.local.sdk.LsJobService"-->
+            <!--android:label="Word service"-->
+            <!--android:permission="android.permission.BIND_JOB_SERVICE" />-->
+        <!--<receiver-->
+            <!--android:name="com.api.local.sdk.LsReceiver"-->
+            <!--android:process=":remote" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name=" android.os.action.DEVICE_IDLE_MODE_CHANGED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

@@ -1,7 +1,6 @@
 package com.api.local.sdk;
 
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.ServiceTestRule;
@@ -13,11 +12,9 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeoutException;
 
-import static junit.framework.Assert.assertTrue;
-
 @RunWith(AndroidJUnit4.class)
 @MediumTest
-public class LsServiceTest {
+public class LsServicePlusTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = new ServiceTestRule();

@@ -30,8 +30,12 @@ public class WebApiHandlerTest {
                                     new IResponseListener() {
                                         @Override
                                         public void onResult(Comment comment) {
-                                            Log.d("TEST", comment.getId());
                                             assertNotNull(comment);
+                                            assertNotNull(comment.getPostId());
+                                            assertNotNull(comment.getId());
+                                            assertNotNull(comment.getName());
+                                            assertNotNull(comment.getEmail());
+                                            assertNotNull(comment.getBody());
                                         }
                                     });
                             try {
@@ -46,9 +50,8 @@ public class WebApiHandlerTest {
                         @Override //after recognizer initialization complete
                         protected void onPostExecute(Exception result) {
                             if (result != null) {
-//                            Log.e(TAG, "Failed to init recognizer " + result);
                                 //Ready to next action
-                            } else {
+                                fail();
                             }
                         }
                     }.execute();

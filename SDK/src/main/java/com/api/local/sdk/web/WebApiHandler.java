@@ -75,25 +75,25 @@ public class WebApiHandler {
                 QueryUtil.getInstance().setCurrentCommentId(0);
             }
             if(QueryUtil.getInstance().getCurrentCommentId() % 5 == 0) {
-                int _nextPostId = Integer.valueOf(QueryUtil.getInstance().getCurrentPostId())+1;
+                int _nextPostId = QueryUtil.getInstance().getCurrentPostId()+1;
                 QueryUtil.getInstance().setCurrentPostId(_nextPostId);
             }
-            int _nextCommentId = Integer.valueOf(QueryUtil.getInstance().getCurrentCommentId())+1;
+            int _nextCommentId = QueryUtil.getInstance().getCurrentCommentId()+1;
             QueryUtil.getInstance().setCurrentCommentId(_nextCommentId);
 
             listenr.onResult(result);
         } catch (SSLException e2) {
-            Log.e(TAG, e2.getMessage());
+            Log.e(TAG, "e2> "+e2.getMessage());
         } catch (SocketTimeoutException e3) {
-            Log.e(TAG, e3.getMessage());
+            Log.e(TAG, "e3> "+e3.getMessage());
         } catch (ConnectException e4) {
-            Log.e(TAG, e4.getMessage());
+            Log.e(TAG, "e4> "+e4.getMessage());
         } catch (UnknownHostException e5) {
-            Log.e(TAG, e5.getMessage());
+            Log.e(TAG, "e5> "+e5.getMessage());
         } catch (JSONException e6) {
-            Log.e(TAG, e6.getMessage());
+            Log.e(TAG, "e6> "+e6.getMessage());
         } catch (IOException e7) {
-            Log.e(TAG, e7.getMessage());
+            Log.e(TAG, "e7> "+e7.getMessage());
         }
     }
 }

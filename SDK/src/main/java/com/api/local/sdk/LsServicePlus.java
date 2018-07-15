@@ -1,8 +1,7 @@
 package com.api.local.sdk;
 
-import android.app.AlarmManager;
+import android.annotation.SuppressLint;
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
@@ -17,17 +16,16 @@ import com.api.local.sdk.web.QueryUtil;
 import com.api.local.sdk.web.WebApiHandler;
 
 
-public class LsService extends Service {
-    private static final String TAG = LsService.class.getSimpleName();
-    public static final int INTERVAL = 5*100;
-    public static final int SERVICE_ID = 1101;
+public class LsServicePlus extends IntentService {
+    private static final String TAG = LsServicePlus.class.getSimpleName();
+    public static final int NORMAL_INTERVAL = 10*1000;
     private final IBinder mBinder = new LocalBinder();
     private Handler mHandler = new Handler();
 
     private Runnable mRunnableTimer   = new Runnable(){
+        @SuppressLint("StaticFieldLeak")
         @Override
         public void run() {
-            Log.d(TAG, "running");
             //Must run in async way
             new AsyncTask<Void, Void, Exception>() {
                 @Override
@@ -37,12 +35,12 @@ public class LsService extends Service {
                     return null;
                 }
 
-                @Override //after recognizer initialization complete
+                @Override //after request complete
                 protected void onPostExecute(Exception result) {
                     if (result != null) {
                         Log.e(TAG, "Failed to init recognizer " + result);
                     } else {
-                        mHandler.postDelayed(mRunnableTimer, INTERVAL);
+                        mHandler.postDelayed(mRunnableTimer, NORMAL_INTERVAL);
                     }
                 }
             }.execute();
@@ -50,6 +48,10 @@ public class LsService extends Service {
     };
 
     private ResponseListener mResponseListener = new ResponseListener();
+    public LsServicePlus() {
+        super("LsServicePlus");
+    }
+
     private class ResponseListener implements IResponseListener{
         @Override
         public void onResult(Comment comment) {
@@ -58,9 +60,9 @@ public class LsService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        public LsService getService() {
+        public LsServicePlus getService() {
             // Return this instance of LocalService so clients can call public methods
-            return LsService.this;
+            return LsServicePlus.this;
         }
     }
 
@@ -70,22 +72,26 @@ public class LsService extends Service {
     }
 
     @Override
-    public void onCreate() {
+    protected void onHandleIntent(@Nullable Intent intent) {
+        //execute task
+        mHandler.post(mRunnableTimer);
+    }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
         // Display a notification about us starting.  We put an icon in the status bar.
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        super.onStartCommand(intent, flags, startId);
-//        mHandler.post(mRunnableTimer);
+        super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        // Cancel the persistent notification.
-
-        // Tell the user we stopped.
+        mHandler.removeCallbacks(mRunnableTimer);
+        super.onDestroy();
     }
 }

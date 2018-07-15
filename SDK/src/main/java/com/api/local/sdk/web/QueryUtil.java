@@ -8,8 +8,8 @@ public class QueryUtil {
     private static final Object mLock = new Object();
 
     private String mQueryUrl = null;
-    private int mCurrentPostId = 100;
-    private int mCurrentCommentId = 496;
+    private int mCurrentPostId = 1;
+    private int mCurrentCommentId = 1;
 
     public static QueryUtil getInstance() {
         synchronized (mLock) {
